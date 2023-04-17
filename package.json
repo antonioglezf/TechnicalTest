@@ -1,0 +1,28 @@
+{
+  "name": "technicaltest-",
+  "version": "1.0.0",
+  "description": "Technical test",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.json ",
+    "start": "node dist/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/antonioglezf/TechnicalTest-.git"
+  },
+  "author": "Antonio Jesús González Fernández",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/antonioglezf/TechnicalTest-/issues"
+  },
+  "homepage": "https://github.com/antonioglezf/TechnicalTest-#readme",
+  "devDependencies": {
+    "@types/node": "^18.15.11",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "fastify": "^4.15.0"
+  }
+}
