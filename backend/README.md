@@ -24,3 +24,13 @@
 
 	`docker-compose down`
 
+### Ejecución en local
+
+1. Crear contenedor con postgres en local
+`docker run --name dev_test_local -e POSTGRES_PASSWORD=antonio -p 5414:5432 -d postgres`
+
+2. Generar una migración usando
+`npx prisma migrate dev --name my-migration`
+
+3. Aplicar la mirgación en la base de datos
+`npx prisma migrate deploy`
