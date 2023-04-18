@@ -1,8 +1,9 @@
-import fastify from "fastify";
+import fastify, { FastifyInstance } from "fastify";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { User } from "./types/user";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
+import fastifyCors from "@fastify/cors";
 
 const prisma = new PrismaClient({
   datasources: {
@@ -12,7 +13,10 @@ const prisma = new PrismaClient({
   },
 });
 
-const server = fastify({ logger: true });
+const server: FastifyInstance = fastify({ logger: true });
+server.register(fastifyCors, {
+  // your options here, if needed
+});
 
 server.get("/", async (_request, reply) => {
   return { hello: "world", nombre: "Antonio" };
