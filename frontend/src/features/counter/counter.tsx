@@ -2,10 +2,9 @@ import React from "react";
 
 import { useSelector, useDispatch } from "react-redux";
 import { decrement, increment } from "./counterSlice";
-import { RootState } from "../../../frontend-gestion-olivar/src/store";
 
 export function Counter() {
-  const count = useSelector((state: RootState) => state.counter.value);
+  //const count = useSelector((state: RootState) => state.counter.value);
   const dispatch = useDispatch();
 
   return (
@@ -17,7 +16,7 @@ export function Counter() {
         >
           Increment
         </button>
-        <span>{count}</span>
+        <span>{/*count*/}</span>
         <button
           aria-label="Decrement value"
           onClick={() => dispatch(decrement())}
