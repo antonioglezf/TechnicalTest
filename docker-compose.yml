@@ -5,9 +5,9 @@ services:
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_USER: prisma
-      POSTGRES_PASSWORD: prisma
-      POSTGRES_DB: postgres
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
   backend:
     build: ./backend
     ports:
@@ -15,7 +15,8 @@ services:
     depends_on:
       - db
     environment:
-      DATABASE_URL: postgresql://prisma:prisma@db:5432/postgres?schema=public
+      DATABASE_URL: ${DATABASE_URL}
+      JWT_SECRET: ${JWT_SECRET}
   frontend:
     build: ./frontend
     ports:
