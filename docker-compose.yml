@@ -16,4 +16,9 @@ services:
       - db
     environment:
       DATABASE_URL: postgresql://prisma:prisma@db:5432/postgres?schema=public
-
+  frontend:
+    build: ./frontend
+    ports:
+      - "3001:3001"
+    depends_on:
+      - backend
