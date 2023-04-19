@@ -34,3 +34,9 @@
 
 3. Aplicar la mirgación en la base de datos
 `npx prisma migrate deploy`
+
+
+
+Alternativa
+docker run --name some-postgres -e POSTGRES_USER=prisma -e POSTGRES_PASSWORD=prisma -d -p 5432:5432 postgres
+

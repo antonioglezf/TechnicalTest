@@ -8,7 +8,7 @@ import fastifyCors from "@fastify/cors";
 const prisma = new PrismaClient({
   datasources: {
     db: {
-      url: process.env.DATABASE_URL,
+      url: "postgresql://prisma:prisma@db:5432/postgres?schema=public",
     },
   },
 });
