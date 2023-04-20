@@ -1,11 +1,10 @@
 import fastify, { FastifyInstance } from "fastify";
 import fastifyCors from "@fastify/cors";
-import { authRoutes, projects, testRoutes } from "./routes";
+import { authRoutes, projects } from "./routes";
 
 const server: FastifyInstance = fastify({ logger: true });
 server.register(fastifyCors, {});
 
-server.register(testRoutes);
 server.register(authRoutes);
 server.register(projects);
 

@@ -18,7 +18,7 @@ function PrivateRoutes() {
           <Route path="/addproject" element={<AddProject />} />
           <Route path="/" element={<WelcomeMessage />} />
           <Route
-            path="/*"
+            path="*"
             element={
               <Error message="Lo siento, la página que buscas no existe." />
             }
