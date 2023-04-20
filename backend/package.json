@@ -4,9 +4,9 @@
   "description": "Technical test",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/server.ts",
-    "dev": "ts-node-dev --respawn src/server.ts",
-    "auto": "npx prisma migrate dev --name my-migration && prisma migrate deploy && npm run start"
+    "start": "ts-node src/index.ts",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "auto": "npx prisma migrate dev --name my-migration && prisma migrate deploy && npm run dev"
   },
   "repository": {
     "type": "git",
