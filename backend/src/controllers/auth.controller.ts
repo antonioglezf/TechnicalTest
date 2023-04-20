@@ -1,11 +1,7 @@
 import { FastifyRequest, FastifyReply } from "fastify";
-
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-
-import { PrismaClient } from "@prisma/client";
-
-const prisma = new PrismaClient();
+import { prismaClient } from "../config/db";
 
 async function register(request: FastifyRequest, reply: FastifyReply) {
   const { name, email, password } = request.body as {
@@ -16,7 +12,7 @@ async function register(request: FastifyRequest, reply: FastifyReply) {
 
   const hashedPassword = await bcrypt.hash(password, 10);
 
-  const existingUser = await prisma.user.findUnique({
+  const existingUser = await prismaClient.user.findUnique({
     where: {
       email: email,
     },
@@ -29,7 +25,7 @@ async function register(request: FastifyRequest, reply: FastifyReply) {
     return;
   }
 
-  const newUser = await prisma.user.create({
+  const newUser = await prismaClient.user.create({
     data: {
       email: email,
       name: name,
@@ -53,7 +49,7 @@ async function login(request: FastifyRequest, reply: FastifyReply) {
     password: string;
   };
 
-  const user = await prisma.user.findUnique({
+  const user = await prismaClient.user.findUnique({
     where: {
       email: email,
     },
@@ -76,6 +72,7 @@ async function login(request: FastifyRequest, reply: FastifyReply) {
   }
 
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string);
+  reply.send({ message: "User is logged successfully", token: token });
 }
 
 export { register, login };
