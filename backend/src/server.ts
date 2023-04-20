@@ -1,23 +1,15 @@
-import fastify, { FastifyInstance } from "fastify";
-import fastifyCors from "@fastify/cors";
-import { authRoutes, projects } from "./routes";
+import server from "./app";
 
-const server: FastifyInstance = fastify({ logger: true });
-server.register(fastifyCors, {});
-
-server.register(authRoutes);
-server.register(projects);
-
-const start = async () => {
-  try {
-    await server.listen({ port: 3000, host: "0.0.0.0" });
-    const address = server.server.address();
-    const port = typeof address === "string" ? address : address?.port;
+server
+  .listen({
+    port: 3000,
+    host: "0.0.0.0",
+  })
+  .then((address) => {
+    const port = typeof address === "string" ? address : (address as any)?.port;
     server.log.info(`Server listening on port ${port}`);
-  } catch (err) {
+  })
+  .catch((err) => {
     server.log.error(err);
     process.exit(1);
-  }
-};
-
-start();
+  });
