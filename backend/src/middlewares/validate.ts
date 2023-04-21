@@ -13,6 +13,7 @@ export async function validate(request: FastifyRequest, reply: FastifyReply) {
   }
   try {
     const payload = jwt.verify(token, process.env.JWT_SECRET!);
+    return payload;
   } catch (err) {
     return reply.code(401).send({ message: "Invalid Token" });
   }
