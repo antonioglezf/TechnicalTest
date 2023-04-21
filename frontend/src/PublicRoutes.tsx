@@ -8,7 +8,7 @@ const PublicRoutes: React.FC<PublicRoutesProps> = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/registro" element={<Register />} />
+      <Route path="/register" element={<Register />} />
       <Route path="/*" element={<Login />} />
     </Routes>
   );

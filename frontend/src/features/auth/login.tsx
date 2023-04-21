@@ -138,10 +138,10 @@ const Login: React.FC = () => {
             </div>
           )}
           <p className="mt-10 text-center text-sm text-gray-500">
-            ¿No tienes cuenta?{" "}
+            ¿No tienes cuenta?
             <Link
               to={{ pathname: "/register" }}
-              className="text-violet-600 text-base font-medium ml-font-semibold leading-6  "
+              className="text-violet-600 text-base font-medium ml-font-semibold leading-6 ml-1"
             >
               Registrate
             </Link>
