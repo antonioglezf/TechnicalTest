@@ -1,10 +1,7 @@
 import React, { useState } from "react";
 import myImage from "../../icon.svg";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store/store";
 
-const Login: React.FC = () => {
-  const error = useSelector((state: RootState) => state.user.error);
+const Register: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -19,7 +16,7 @@ const Login: React.FC = () => {
     event.preventDefault();
     console.log(formData);
 
-    fetch("http://localhost:3000/api/login", {
+    fetch("http://localhost:3000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -38,6 +35,7 @@ const Login: React.FC = () => {
     <>
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <h1>Registro</h1>
           <img
             className="mx-auto h-10 w-auto"
             src={myImage}
@@ -105,18 +103,19 @@ const Login: React.FC = () => {
               </button>
             </div>
           </form>
-          {error && (
+
+          {
             <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center">
-              {error}
+              aasdfa
             </div>
-          )}
+          }
           <p className="mt-10 text-center text-sm text-gray-500">
             ¿No tienes cuenta?{" "}
             <a
               href="#"
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              ¡Registrate!
+              ¡Accede a todos nuestros beneficios!
             </a>
           </p>
         </div>
@@ -125,4 +124,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;

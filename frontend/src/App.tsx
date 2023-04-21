@@ -2,7 +2,7 @@ import React from "react";
 
 import "./App.css";
 import { Counter } from "./features/counter/counter";
-import Login from "./features/auth/login";
+import Login from "./features/auth/Login";
 
 function App() {
   return (
