@@ -22,12 +22,12 @@ export const loginSlice = createSlice({
   reducers: {
     loginSuccess: (
       state,
-      action: PayloadAction<{ token: string; email: string; firstName: string }>
+      action: PayloadAction<{ token: string; email: string; name: string }>
     ) => {
       state.isLogged = true;
       state.token = action.payload.token;
       state.email = action.payload.email;
-      state.name = action.payload.firstName;
+      state.name = action.payload.name;
       state.error = null;
       localStorage.setItem("token", action.payload.token);
       sessionStorage.setItem("email", state.email);

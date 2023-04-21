@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import myImage from "../../icon.svg";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { loginFailure, loginSuccess } from "./userSlice";
 
 const Login: React.FC = () => {
   const error = useSelector((state: RootState) => state.user.error);
@@ -9,6 +11,8 @@ const Login: React.FC = () => {
     email: "",
     password: "",
   });
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -29,9 +33,32 @@ const Login: React.FC = () => {
         password: formData.password,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => console.log(data))
-      .catch((error) => console.error(error));
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(
+            "El correo electrónico o contraseña que ingresaste no es correcto."
+          );
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          dispatch(
+            loginSuccess({
+              token: data.token,
+              email: data.email,
+              name: data.name,
+            })
+          );
+          navigate("/");
+        } else {
+          dispatch(loginFailure(data.error || "Error desconocido"));
+        }
+      })
+      .catch((error) => {
+        dispatch(loginFailure(error.message));
+      });
   };
 
   return (
@@ -106,18 +133,18 @@ const Login: React.FC = () => {
             </div>
           </form>
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center">
+            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative text-center mt-5">
               {error}
             </div>
           )}
           <p className="mt-10 text-center text-sm text-gray-500">
             ¿No tienes cuenta?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+            <Link
+              to={{ pathname: "/register" }}
+              className="text-violet-600 text-base font-medium ml-font-semibold leading-6  "
             >
-              ¡Registrate!
-            </a>
+              Registrate
+            </Link>
           </p>
         </div>
       </div>
