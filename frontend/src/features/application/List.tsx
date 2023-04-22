@@ -28,11 +28,11 @@ const List: React.FC<ListProps> = ({ items }) => {
                 <span className="text-gray-500 text-sm">
                   Estado: {item.status}
                 </span>
-                {item.startDate && (
+                {item.startDate ? (
                   <span className="text-gray-500 text-sm">
-                    Inicio: {item.startDate.toLocaleDateString()}
+                    Inicio: {new Date(item.startDate).toLocaleDateString()}
                   </span>
-                )}
+                ) : null}
               </div>
               <div className="col-span-1 flex flex-col">
                 <span className="text-gray-500 text-sm">
@@ -52,11 +52,11 @@ const List: React.FC<ListProps> = ({ items }) => {
                 >
                   Editar
                 </button>
-                {item.endDate && (
+                {item.endDate ? (
                   <span className="text-gray-500 text-sm">
-                    Fin: {item.endDate.toLocaleDateString()}
+                    Fin:{new Date(item.endDate).toLocaleDateString()}
                   </span>
-                )}
+                ) : null}
               </div>
             </div>
           </li>
