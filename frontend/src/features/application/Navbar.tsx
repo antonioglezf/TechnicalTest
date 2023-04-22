@@ -48,7 +48,7 @@ export const Navbar: React.FC = () => {
                   dispatch(logout());
                   navigate("/login");
                 }}
-                className="bg-red-800 hover:bg-red-400 px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:shadow-outline"
+                className="bg-red-800 hover:bg-red-400 px-3 py-2 rounded-md text-sm font-medium text-white focus:outline-none focus:shadow-outline select-none"
               >
                 Desconectar
               </a>
