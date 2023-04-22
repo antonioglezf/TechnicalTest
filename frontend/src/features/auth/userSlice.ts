@@ -31,7 +31,7 @@ export const loginSlice = createSlice({
       state.error = null;
       localStorage.setItem("token", action.payload.token);
       sessionStorage.setItem("email", state.email);
-      sessionStorage.setItem("firstName", state.name);
+      sessionStorage.setItem("name", state.name);
     },
     loginFailure: (state, action: PayloadAction<string>) => {
       state.isLogged = null;
@@ -48,7 +48,6 @@ export const loginSlice = createSlice({
       state.error = null;
       localStorage.removeItem("token");
       sessionStorage.removeItem("email");
-      sessionStorage.removeItem("firstName");
     },
   },
 });

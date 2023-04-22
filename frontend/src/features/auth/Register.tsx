@@ -53,8 +53,8 @@ const Register: React.FC = () => {
           dispatch(
             loginSuccess({
               token: data.token,
-              email: "EMAIL",
-              name: "NOMBRE",
+              email: formData.email,
+              name: formData.name,
             })
           );
           navigate("/");

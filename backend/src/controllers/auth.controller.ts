@@ -72,7 +72,11 @@ async function login(request: FastifyRequest, reply: FastifyReply) {
   }
 
   const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET as string);
-  reply.send({ message: "User is logged successfully", token: token });
+  reply.send({
+    message: "User is logged successfully",
+    token: token,
+    name: user.name,
+  });
 }
 
 export { register, login };

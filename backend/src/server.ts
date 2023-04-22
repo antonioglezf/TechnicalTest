@@ -7,6 +7,7 @@ server.register(fastifyCors, {});
 
 server.register(testRoutes);
 server.register(authRoutes);
+server.register(projects);
 
 const start = async () => {
   try {
