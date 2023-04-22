@@ -1,10 +1,6 @@
+import { Project } from "../../type/Project";
 import List from "./List";
 import { Navbar } from "./Navbar";
-
-export interface ListItem {
-  id: number;
-  text: string;
-}
 
 async function getProjects() {
   const token = localStorage.getItem("token");
@@ -24,18 +20,58 @@ async function getProjects() {
     }
     const data = await response.json();
     console.log("Created project:", data);
+    const projects: Project[] = data;
+    return projects;
   } catch (error) {
     console.error(error);
   }
 }
 
 export const Aplication = () => {
-  const myList: ListItem[] = [
-    { id: 1, text: "Item 1" },
-    { id: 2, text: "Item 2" },
-    { id: 3, text: "Item 3" },
+  const myList: Project[] = [
+    {
+      id: 1,
+      title: "Project Antonio",
+      description:
+        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi maximus leo ac magna viverra, quis viverra nunc lacinia. Nunc dictum luctus mi vitae finibus. Cras leo turpis, tincidunt non tempus a, placerat vitae risus. Cras eu nunc enim. Suspendisse id lorem leo. Donec id leo nisl. Aenean quis pulvinar ipsum. Nunc ornare orci sit amet euismod sagittis. Praesent luctus nibh at turpis volutpat vestibulum. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent hendrerit urna id dolor mattis, quis auctor tortor accumsan.",
+      startDate: new Date("2023-05-01T00:00:00.000Z"),
+      endDate: new Date("2023-06-30T23:59:59.000Z"),
+      status: "in progress",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: 2,
+      title: "Project Antonio",
+      description: "Project Description",
+      startDate: new Date("2023-05-01T00:00:00.000Z"),
+      endDate: new Date("2023-06-30T23:59:59.000Z"),
+      status: "in progress",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: 3,
+      title: "Project AntonioA",
+      description: "Project Description",
+      startDate: new Date("2023-05-01T00:00:00.000Z"),
+      endDate: new Date("2023-06-30T23:59:59.000Z"),
+      status: "in progress",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
+    {
+      id: 4,
+      title: "Project AntonioA",
+      description: "Project Description",
+      startDate: new Date("2023-05-01T00:00:00.000Z"),
+      endDate: new Date("2023-06-30T23:59:59.000Z"),
+      status: "in progress",
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    },
   ];
-  getProjects();
+
   return (
     <>
       <Navbar></Navbar>
