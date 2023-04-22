@@ -51,7 +51,11 @@ const Register: React.FC = () => {
         if (data.token) {
           localStorage.setItem("token", data.token);
           dispatch(
-            loginSuccess({ token: data.token, email: "EMAIL", name: "NOMBRE" })
+            loginSuccess({
+              token: data.token,
+              email: "EMAIL",
+              name: "NOMBRE",
+            })
           );
           navigate("/");
         } else {
