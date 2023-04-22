@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { Project } from "../../type/Project";
-import List from "./List";
-import { Navbar } from "./Navbar";
+import ProjectList from "./List";
 
-const Aplication = () => {
+const ContainerList = () => {
   const [myList, setMyList] = useState<Project[]>([]);
 
   async function getProjects() {
@@ -48,9 +47,9 @@ const Aplication = () => {
 
   return (
     <>
-      <List items={myList} />
+      <ProjectList items={myList} />
     </>
   );
 };
 
-export default Aplication;
+export default ContainerList;
