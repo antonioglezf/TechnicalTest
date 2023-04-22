@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import Login from "./features/auth/Login";
+import Login from "./features/auth/login";
 import Register from "./features/auth/Register";
 
 interface PublicRoutesProps {}
