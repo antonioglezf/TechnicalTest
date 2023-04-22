@@ -3,7 +3,7 @@ import myImage from "../../icon.svg";
 import { RootState } from "../../store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../auth/userSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 export const Navbar: React.FC = () => {
   const name = useSelector((state: RootState) => state.user.name);
   const dispatch = useDispatch();
@@ -20,24 +20,24 @@ export const Navbar: React.FC = () => {
           />
           <div className="hidden md:block">
             <div className="ml-10 flex items-baseline space-x-4">
-              <a
-                href="#"
-                className="px-3 py-2 rounded-md text-sm font-medium text-white  hover:text-gray-500"
-              >
-                Home
-              </a>
-              <a
-                href="#"
+              <Link
+                to="/"
                 className="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-gray-500 "
               >
-                Friends
-              </a>
-              <a
-                href="#"
-                className="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-gray-500"
+                Inicio
+              </Link>
+              <Link
+                to="/project"
+                className="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-gray-500 "
               >
-                Messages
-              </a>
+                Proyectos
+              </Link>
+              <Link
+                to="/addproject"
+                className="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-gray-500 "
+              >
+                Crear proyecto
+              </Link>
             </div>
           </div>
           <div className="flex-1 flex justify-end items-center">

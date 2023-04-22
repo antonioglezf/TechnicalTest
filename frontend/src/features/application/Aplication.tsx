@@ -48,7 +48,6 @@ const Aplication = () => {
 
   return (
     <>
-      <Navbar></Navbar>
       <List items={myList} />
     </>
   );
