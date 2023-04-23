@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/server.ts",
     "dev": " ts-node-dev --respawn src/server.ts",
-    "auto": "npx prisma generate && npx prisma migrate dev --name my-migration && prisma migrate deploy && npm run dev"
+    "auto": "npx prisma generate && npx prisma migrate dev --name my-migration && prisma migrate deploy && npm run dev",
+    "test": "tap --node-arg=--require=ts-node/register"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,14 @@
   },
   "homepage": "https://github.com/antonioglezf/TechnicalTest-#readme",
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "@types/bcryptjs": "^2.4.2",
     "@types/jsonwebtoken": "^9.0.1",
     "@types/node": "^18.15.11",
+    "@types/tap": "^15.0.8",
+    "faker": "^6.6.6",
+    "pino-pretty": "^10.0.0",
+    "tap": "^16.3.4",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.0.4"
