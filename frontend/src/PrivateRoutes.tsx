@@ -3,10 +3,9 @@ import Error from "./pages/Error";
 
 import WelcomeMessage from "./features/application/WelcomeMessage";
 import { Navbar } from "./features/application/Navbar";
-import { useState } from "react";
-import { Project } from "./type/Project";
-import ContainerList from "./features/project/ContainerList";
+
 import { AddProject } from "./features/project/AddProject";
+import List from "./features/project/List";
 
 function PrivateRoutes() {
   return (
@@ -14,7 +13,7 @@ function PrivateRoutes() {
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8">
         <Routes>
-          <Route path="/project" element={<ContainerList />} />
+          <Route path="/project" element={<List />} />
           <Route path="/addproject" element={<AddProject />} />
           <Route path="/" element={<WelcomeMessage />} />
           <Route

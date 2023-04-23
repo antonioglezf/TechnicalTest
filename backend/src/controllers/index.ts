@@ -3,4 +3,5 @@ export {
   getAllProjects,
   createProject,
   updateProject,
+  deleteProject,
 } from "./projects.controller";
