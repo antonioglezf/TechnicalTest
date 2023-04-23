@@ -110,36 +110,32 @@ export const deleteProject = async (
     process.env.JWT_SECRET! as string
   );
   const userId = decodedToken.userId;
-  if (!request.params) {
-    reply.status(400).send({ message: "Project id is required" });
-  }
 
   const projectId = (request as RequestWithParams).params.id;
 
   const projectIdNumber = parseInt(projectId);
 
-  try {
-    const project = await prismaClient.project.findUnique({
-      where: {
-        id: projectIdNumber,
-      },
-    });
-    if (!project) {
-      reply.status(404).send({ message: "Project not found" });
-      return;
-    }
-    if (project.userId !== userId) {
-      reply.status(401).send({ message: "Unauthorized" });
-      return;
-    }
+  const project = await prismaClient.project.findUnique({
+    where: {
+      id: projectIdNumber,
+    },
+  });
 
-    const deletedProject = await prismaClient.project.delete({
-      where: {
-        id: projectIdNumber,
-      },
-    });
-    reply.status(200).send(deletedProject);
-  } catch (error: any) {
-    reply.status(500).send({ message: error.message });
+  if (!project) {
+    reply.status(404).send({ message: "Project not found" });
+    return;
   }
+
+  if (project.userId !== userId) {
+    reply.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+
+  const deletedProject = await prismaClient.project.delete({
+    where: {
+      id: projectIdNumber,
+    },
+  });
+
+  reply.status(200).send(deletedProject);
 };
