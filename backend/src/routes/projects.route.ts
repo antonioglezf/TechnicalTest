@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 
 import { validate } from "../middlewares/validate";
-import { createProject, getAllProjects } from "../controllers";
+import { createProject, getAllProjects, updateProject } from "../controllers";
 
 export function projects(
   fastify: FastifyInstance,
@@ -10,5 +10,10 @@ export function projects(
 ) {
   fastify.get("/api/projects", { preValidation: validate }, getAllProjects);
   fastify.post("/api/projects/add", { preValidation: validate }, createProject);
+  fastify.put(
+    "/api/projects/update",
+    { preValidation: validate },
+    updateProject
+  );
   done();
 }

@@ -5,6 +5,4 @@ export interface Project {
   startDate?: Date;
   endDate?: Date;
   status: string;
-  createdAt: Date;
-  updatedAt: Date;
 }
