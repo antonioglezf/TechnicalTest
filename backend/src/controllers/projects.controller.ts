@@ -8,58 +8,43 @@ export const getAllProjects = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  try {
-    const token = request.headers["auth-token"];
-    if (!token || typeof token !== "string") {
-      throw new Error("Token is not defined");
-    }
-
-    const decodedToken: any = jwt.verify(
-      token,
-      process.env.JWT_SECRET! as string
-    );
-    const userId = decodedToken.userId;
-    const projects = await prismaClient.project.findMany({
-      where: { userId: userId },
-    });
-
-    reply.send(projects);
-  } catch (error: any) {
-    reply.status(500).send({ message: error.message });
-  }
+  const token = request.headers["auth-token"];
+  const decodedToken: any = jwt.verify(
+    token! as string,
+    process.env.JWT_SECRET! as string
+  );
+  const userId = decodedToken.userId;
+  const projects = await prismaClient.project.findMany({
+    where: { userId: userId },
+  });
+  reply
+    .status(200)
+    .send({ message: "Projects fetched successfully", projects });
 };
 
 export const createProject = async (
   request: FastifyRequest,
   reply: FastifyReply
 ) => {
-  console.log("RequestBody:", request.body);
   const token = request.headers["auth-token"];
-  if (!token || typeof token !== "string") {
-    throw new Error("Token is not defined");
-  }
 
   const decodedToken: any = jwt.verify(
-    token,
+    token! as string,
     process.env.JWT_SECRET! as string
   );
   const userId = decodedToken.userId;
   const newProject = request.body as Project;
-  try {
-    const project = await prismaClient.project.create({
-      data: {
-        title: newProject.title,
-        description: newProject.description,
-        startDate: newProject.startDate,
-        endDate: newProject.endDate,
-        status: newProject.status,
-        userId: userId,
-      },
-    });
-    reply.send(project);
-  } catch (error: any) {
-    reply.status(500).send({ message: error.message });
-  }
+  const project = await prismaClient.project.create({
+    data: {
+      title: newProject.title,
+      description: newProject.description,
+      startDate: newProject.startDate,
+      endDate: newProject.endDate,
+      status: newProject.status,
+      userId: userId,
+    },
+  });
+  reply.status(200).send({ message: "Project added successfully", project });
 };
 
 export const updateProject = async (
@@ -67,20 +52,35 @@ export const updateProject = async (
   reply: FastifyReply
 ) => {
   const token = request.headers["auth-token"];
-  if (!token || typeof token !== "string") {
-    throw new Error("Token is not defined");
-  }
-
   const decodedToken: any = jwt.verify(
-    token,
+    token! as string,
     process.env.JWT_SECRET! as string
   );
   const userId = decodedToken.userId;
 
   const updatedProject = request.body as Project;
   try {
-    const project = await prismaClient.project.update({
-      where: { id: updatedProject.id },
+    const project = await prismaClient.project.findUnique({
+      where: {
+        id: updatedProject.id,
+      },
+    });
+    if (!project) {
+      reply.status(404).send({ message: "Project not found" });
+      return;
+    }
+    if (project.userId !== userId) {
+      reply.status(401).send({ message: "Unauthorized" });
+      return;
+    }
+
+    const projectUpdate = await prismaClient.project.update({
+      where: {
+        id: updatedProject.id,
+      },
+      include: {
+        user: true,
+      },
       data: {
         title: updatedProject.title,
         description: updatedProject.description,
@@ -89,7 +89,7 @@ export const updateProject = async (
         status: updatedProject.status,
       },
     });
-    reply.send(project);
+    reply.status(200).send(projectUpdate);
   } catch (error: any) {
     reply.status(500).send({ message: error.message });
   }

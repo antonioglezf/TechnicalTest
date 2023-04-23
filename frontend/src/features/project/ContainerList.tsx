@@ -22,8 +22,9 @@ const ContainerList = () => {
         throw new Error("Failed to get projects");
       }
       const data = await response.json();
+
       console.log("Created project:", data);
-      const projects: Project[] = data;
+      const projects: Project[] = data.projects;
       return projects;
     } catch (error) {
       console.error(error);
