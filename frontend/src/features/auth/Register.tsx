@@ -1,16 +1,18 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
 import myImage from "../../icon.svg";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store/store";
+import { Link, useNavigate } from "react-router-dom";
 import { loginFailure, loginSuccess } from "./userSlice";
 
-const Login: React.FC = () => {
-  const error = useSelector((state: RootState) => state.user.error);
+const Register: React.FC = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    name: "",
   });
+
+  const error = useSelector((state: RootState) => state.user.error);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -19,36 +21,40 @@ const Login: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleLoginFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleRegisterFormSubmit = (
+    event: React.FormEvent<HTMLFormElement>
+  ) => {
     event.preventDefault();
     console.log(formData);
 
-    fetch("http://localhost:3000/api/login", {
+    fetch("http://localhost:3000/api/register", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        name: formData.name,
         email: formData.email,
         password: formData.password,
       }),
     })
       .then((response) => {
         if (!response.ok) {
-          throw new Error(
-            "El correo electrónico o contraseña que ingresaste no es correcto."
-          );
+          throw new Error("La respuesta de la red no fue correcta.");
         }
         return response.json();
       })
       .then((data) => {
+        console.log("Data.success", data.success);
+        console.log("data.token:", data.token);
+
         if (data.token) {
           localStorage.setItem("token", data.token);
           dispatch(
             loginSuccess({
               token: data.token,
-              email: data.email,
-              name: data.name,
+              email: formData.email,
+              name: formData.name,
             })
           );
           navigate("/");
@@ -71,12 +77,12 @@ const Login: React.FC = () => {
             alt="Your Company"
           />
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Iniciar sesión en su cuenta
+            Registrate
           </h2>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" onSubmit={handleLoginFormSubmit}>
+          <form className="space-y-6" onSubmit={handleRegisterFormSubmit}>
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -96,6 +102,28 @@ const Login: React.FC = () => {
                   value={formData.email}
                   onChange={handleInputChange}
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label
+                  htmlFor="name"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
+                  Nombre
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset  sm:text-sm sm:leading-6"
+                  required
                 />
               </div>
             </div>
@@ -128,7 +156,7 @@ const Login: React.FC = () => {
                 type="submit"
                 className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
               >
-                Iniciar sesión
+                Registrate
               </button>
             </div>
           </form>
@@ -137,13 +165,13 @@ const Login: React.FC = () => {
               {error}
             </div>
           )}
-          <p className="mt-10 text-center text-sm text-gray-500">
-            ¿No tienes cuenta?
+          <p className="mt-10 text-center text-sm text-gray-500 ">
+            ¿Ya tienes cuenta?
             <Link
-              to={{ pathname: "/register" }}
+              to={{ pathname: "/" }}
               className="text-violet-600 text-base font-medium ml-font-semibold leading-6 ml-1"
             >
-              Registrate
+              Inicia sesion
             </Link>
           </p>
         </div>
@@ -152,4 +180,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;
