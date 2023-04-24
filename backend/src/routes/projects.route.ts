@@ -1,7 +1,12 @@
 import { FastifyInstance } from "fastify";
 
 import { validate } from "../middlewares/validate";
-import { createProject, getAllProjects, updateProject } from "../controllers";
+import {
+  createProject,
+  deleteProject,
+  getAllProjects,
+  updateProject,
+} from "../controllers";
 
 export function projects(
   fastify: FastifyInstance,
@@ -14,6 +19,11 @@ export function projects(
     "/api/projects/update",
     { preValidation: validate },
     updateProject
+  );
+  fastify.delete(
+    "/api/projects/delete/:id",
+    { preValidation: validate },
+    deleteProject
   );
   done();
 }

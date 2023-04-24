@@ -94,3 +94,48 @@ export const updateProject = async (
     reply.status(500).send({ message: error.message });
   }
 };
+
+interface RequestWithParams {
+  params: {
+    id: string;
+  };
+}
+export const deleteProject = async (
+  request: FastifyRequest,
+  reply: FastifyReply
+) => {
+  const token = request.headers["auth-token"];
+  const decodedToken: any = jwt.verify(
+    token! as string,
+    process.env.JWT_SECRET! as string
+  );
+  const userId = decodedToken.userId;
+
+  const projectId = (request as RequestWithParams).params.id;
+
+  const projectIdNumber = parseInt(projectId);
+
+  const project = await prismaClient.project.findUnique({
+    where: {
+      id: projectIdNumber,
+    },
+  });
+
+  if (!project) {
+    reply.status(404).send({ message: "Project not found" });
+    return;
+  }
+
+  if (project.userId !== userId) {
+    reply.status(401).send({ message: "Unauthorized" });
+    return;
+  }
+
+  const deletedProject = await prismaClient.project.delete({
+    where: {
+      id: projectIdNumber,
+    },
+  });
+
+  reply.status(200).send(deletedProject);
+};

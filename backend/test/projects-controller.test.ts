@@ -123,6 +123,7 @@ test("requests the `/update` route not found", async (t) => {
   t.end();
 });
 
+let tokenNewUser: string;
 test("requests the `/update` route not user authroization", async (t) => {
   const responseNewUser = await server.inject({
     method: "POST",
@@ -133,7 +134,7 @@ test("requests the `/update` route not user authroization", async (t) => {
       name: faker.name.firstName(),
     },
   });
-  const tokenNewUser = responseNewUser.json().token;
+  tokenNewUser = responseNewUser.json().token;
 
   const projectOtherUser = {
     id: idProjectAdded,
@@ -175,5 +176,57 @@ test("requests the `/update` okay", async (t) => {
   console.log("status code: ", response.statusCode);
   t.equal(response.statusCode, 200);
   t.equal(response.headers["content-type"], "application/json; charset=utf-8");
+  t.end();
+});
+
+test("requests the `/delete` fail id", async (t) => {
+  const response = await server.inject({
+    method: "DELETE",
+    url: "/api/projects/delete/newroute/",
+    headers: {
+      "auth-token": `${token}`,
+    },
+  });
+  console.log("status code: ", response.statusCode);
+  t.equal(response.statusCode, 404);
+  t.end();
+});
+
+test("requests the `/delete` id other user", async (t) => {
+  const response = await server.inject({
+    method: "DELETE",
+    url: `/api/projects/delete/${idProjectAdded}`,
+    headers: {
+      "auth-token": `${tokenNewUser}`,
+    },
+  });
+  console.log("status code: ", response.statusCode);
+  t.equal(response.statusCode, 401);
+  t.end();
+});
+
+test("requests the `/delete` okay id", async (t) => {
+  const response = await server.inject({
+    method: "DELETE",
+    url: `/api/projects/delete/${idProjectAdded}`,
+    headers: {
+      "auth-token": `${token}`,
+    },
+  });
+  console.log("status code: ", response.statusCode);
+  t.equal(response.statusCode, 200);
+  t.end();
+});
+
+test("requests the `/delete` okay id", async (t) => {
+  const response = await server.inject({
+    method: "DELETE",
+    url: `/api/projects/delete/-1`,
+    headers: {
+      "auth-token": `${token}`,
+    },
+  });
+  console.log("status code: ", response.statusCode);
+  t.equal(response.statusCode, 404);
   t.end();
 });
