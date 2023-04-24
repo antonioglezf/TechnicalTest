@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Project } from "../../type/Project";
 import { ProjectItem } from "./ProjectItem";
 import FormProject from "./FormProject";
+import NoProjectsFound from "./NoProjectsFound";
 
 const List: React.FC = () => {
   const [editMode, setEditMode] = useState(false);
@@ -120,13 +121,7 @@ const List: React.FC = () => {
 
   return (
     <>
-      {editMode ? (
-        <FormProject
-          project={editProject!}
-          onSave={handleSave}
-          onCancel={handleCancel}
-        />
-      ) : (
+      {myList.length && !editMode ? (
         <ul className="divide-y divide-gray-300 rounded-lg overflow-hidden border-gray-300 mt-5">
           {myList.map((item) => (
             <ProjectItem
@@ -137,6 +132,18 @@ const List: React.FC = () => {
             />
           ))}
         </ul>
+      ) : (
+        <>
+          {editMode ? (
+            <FormProject
+              project={editProject!}
+              onSave={handleSave}
+              onCancel={handleCancel}
+            />
+          ) : (
+            <NoProjectsFound />
+          )}
+        </>
       )}
     </>
   );
