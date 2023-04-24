@@ -21,7 +21,7 @@
 
 ## 🚀 Setup
 
-### 🔥  Ejecución
+### 🔥 1 Ejecución
 1. Ejecuta `docker-compose build`.
 2. Ejecuta `docker-compose up -d`
 
@@ -32,7 +32,7 @@ Una vez los contenedores estén en marcha, tendrás los siguientes entornos:
 * Frontend `http://localhost:3001/`
 
 
-### ✅  Ejecución de los test.
+### ✅ 2 Ejecución de los test.
 1- Detener los contenedores
 
 `docker-compose stop`
